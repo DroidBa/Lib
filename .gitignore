@@ -1,0 +1,55 @@
+# IDEA Config Files
+*.iml
+*.ipr
+*.iws
+*.eml
+.idea/
+
+# Built Application Files
+*.ap_
+*.apk
+
+# Files For The dex VM
+*.dex
+
+# Java Class Files
+*.class
+
+# Generate Files
+bin/
+gen/
+out/
+captures/
+
+# Local Config Files
+local.properties
+ant.properties
+lint.xml
+build.xml
+
+# Proguard Folder
+proguard/
+proguard-project.txt
+
+# Gradle Files
+.gradle/
+build/
+
+# Eclipse Project Files
+.classpath
+.project
+.settings/
+
+# Mac System Files
+.DS_Store
+
+# Windows System Files
+Thumbs.db
+thumbs.db
+Desktop.ini
+
+# SVN
+.svn/
+
+# Others
+*.hprof
