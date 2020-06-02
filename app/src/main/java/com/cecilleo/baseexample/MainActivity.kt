@@ -1,17 +1,13 @@
 package com.cecilleo.baseexample
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import com.cecilleo.baseexample.databinding.ActivityExmapleBinding
 import com.cecilleo.lib.mvp.MVPActivity
-import com.cecilleo.lib.mvp.MVPView
 
-class MainActivity : MVPActivity<TestView, TestPresenter>(), TestView {
+class MainActivity : MVPActivity<ActivityExmapleBinding, TestView, TestPresenter>(), TestView {
 
   override fun createPresenter(): TestPresenter {
     return TestPresenter(this)
   }
-
-  override fun getLayoutResId(): Int = R.layout.main_activity
 
   override fun initView() {
   }

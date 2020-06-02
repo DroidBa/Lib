@@ -2,10 +2,11 @@ package com.cecilleo.lib.mvvm
 
 import android.os.Bundle
 import android.view.View
+import androidx.viewbinding.ViewBinding
 import com.cecilleo.lib.base.AbsFragment
 import com.cecilleo.lib.model.BaseViewModel
 
-abstract class BaseVMFragment<VM : BaseViewModel> : AbsFragment() {
+abstract class BaseVMFragment<VB : ViewBinding, VM : BaseViewModel> : AbsFragment<VB>() {
   private lateinit var mViewModel: VM
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

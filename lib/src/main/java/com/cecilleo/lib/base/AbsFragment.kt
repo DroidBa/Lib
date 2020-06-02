@@ -6,18 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancelChildren
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.lang.reflect.ParameterizedType
 
-abstract class AbsFragment : Fragment(), CoroutineScope by MainScope() {
+abstract class AbsFragment<VB : ViewBinding> : Fragment(), CoroutineScope by MainScope() {
   var mIsFragmentVisible = false
   private var mNeedDispatch = true
   private var mIsFirstTimeVisible = true
   private var mIsInvisibleBeforeUserLeave = false
   var mRootView: View? = null
+  private var viewBinding: VB? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -26,10 +29,12 @@ abstract class AbsFragment : Fragment(), CoroutineScope by MainScope() {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?): View? {
-    if (mRootView == null) {
-      mRootView = inflater.inflate(generateLayoutRes(), container, false)
-    }
-    return mRootView
+    val type = javaClass.genericSuperclass
+    val clazz = (type as ParameterizedType).actualTypeArguments[0] as Class<VB>
+    val method = clazz.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java,
+        Boolean::class.java)
+    viewBinding = method.invoke(null, layoutInflater, container, false) as VB
+    return viewBinding!!.root
   }
 
   @Subscribe open fun onEvent(evt: String) {}
@@ -99,6 +104,7 @@ abstract class AbsFragment : Fragment(), CoroutineScope by MainScope() {
   }
 
   override fun onDestroyView() {
+    viewBinding = null
     if (mRootView != null && mRootView!!.parent != null) {
       (mRootView!!.parent as ViewGroup).removeView(mRootView)
     }
@@ -119,7 +125,7 @@ abstract class AbsFragment : Fragment(), CoroutineScope by MainScope() {
           fragmentManager.fragments
         if (childFragments != null) {
           for (childFragment in childFragments) {
-            if (childFragment is AbsFragment
+            if (childFragment is AbsFragment<*>
                 && !childFragment.isHidden()
                 && childFragment.getUserVisibleHint()) {
               childFragment.dispatchFragmentVisibility(visible)
@@ -134,7 +140,7 @@ abstract class AbsFragment : Fragment(), CoroutineScope by MainScope() {
         //onFirstTimeVisible()
 //      } else {
         onFragmentVisible()
-     }
+      }
 //    } else {
 //      onFragmentInvisible()
     }

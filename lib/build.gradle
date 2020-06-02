@@ -7,6 +7,9 @@ android {
   useLibrary 'org.apache.http.legacy'
   compileSdkVersion rootProject.ext.android.compileSdkVersion
   buildToolsVersion rootProject.ext.android.buildToolsVersion
+  viewBinding {
+    enabled = true
+  }
 
   defaultConfig {
     minSdkVersion rootProject.ext.android.minSdkVersion
