@@ -3,36 +3,58 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-  compileSdkVersion 29
-  buildToolsVersion "29.0.3"
+  useLibrary 'org.apache.http.legacy'
+  compileSdkVersion rootProject.ext.android.compileSdkVersion
+  buildToolsVersion rootProject.ext.android.buildToolsVersion
 
   defaultConfig {
-    applicationId "com.cecilleo.baseexample"
-    minSdkVersion 21
-    targetSdkVersion 29
-    versionCode 1
-    versionName "1.0"
+    applicationId rootProject.ext.android.applicationId
+    minSdkVersion rootProject.ext.android.minSdkVersion
+    targetSdkVersion rootProject.ext.android.targetSdkVersion
+    versionCode rootProject.ext.android.versionCode
+    versionName rootProject.ext.android.versionName
+    multiDexEnabled true
 
-    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    buildConfigField "String", "APPNAME", "\"${APPNAME}\""
   }
 
+  //  signingConfigs {
+  //    release {
+  //      storeFile file(KEYSTORE_FILE)
+  //      storePassword KEYSTORE_PASSWORD
+  //      keyAlias KEY_ALIAS
+  //      keyPassword KEY_PASSWORD
+  //      v1SigningEnabled true
+  //      v2SigningEnabled true
+  //    }
+  //  }
+
   buildTypes {
-    release {
+    debug {
+      manifestPlaceholders = [app_name: "@string/app_name_debug"]
+      debuggable true
       minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+      zipAlignEnabled false
+      shrinkResources false
+      //      signingConfig signingConfigs.release
+    }
+
+    release {
+      manifestPlaceholders = [app_name: "@string/app_name"]
+      debuggable false
+      minifyEnabled true
+      zipAlignEnabled true
+      shrinkResources false
+      //      signingConfig signingConfigs.release
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
 }
 
 dependencies {
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-  implementation 'androidx.appcompat:appcompat:1.0.2'
-  implementation 'androidx.core:core-ktx:1.0.2'
-  implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-  implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-  implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
-  testImplementation 'junit:junit:4.12'
-  androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
+  implementation project(path: ':lib')
+  implementation rootProject.ext.kotlin.stdLibJdk8
+  implementation rootProject.ext.xSupport.compat
+  implementation rootProject.ext.dependencies.constraintlayout
 }
