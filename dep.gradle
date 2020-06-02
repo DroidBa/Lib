@@ -5,6 +5,7 @@ def rxAndroidVersion = '1.2.1'
 def okHttpVersion = '4.7.2'
 def retrofitVersion = '2.9.0'
 def constraintVersion = '1.1.3'
+def lifecycleVersion = "2.2.0"
 ext {
   android = [
       applicationId: "com.cecilleo.baseexample",
@@ -33,7 +34,11 @@ ext {
       retrofitGsonConverter: "com.squareup.retrofit2:converter-gson:$retrofitVersion",
       retrofitRx: "com.squareup.retrofit2:adapter-rxjava:2.1.0",
       constraintlayout: "androidx.constraintlayout:constraintlayout:$constraintVersion"
+  ]
 
+  lifecycle = [
+      extensions: "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion",
+      viewmodelktx: "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
   ]
 
   xSupport = [

@@ -1,7 +1,5 @@
 package com.cecilleo.baseexample
 
-import com.cecilleo.baseexample.ExamleRes
-import com.cecilleo.lib.net.NBAResponse
 import retrofit2.http.GET
 
 interface ExampleService {

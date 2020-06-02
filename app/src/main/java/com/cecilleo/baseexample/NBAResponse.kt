@@ -1,4 +1,6 @@
-package com.cecilleo.lib.net
+package com.cecilleo.baseexample
+
+import com.cecilleo.lib.net.BaseResponse
 
 class NBAResponse<T>(var code: Int, data: T) : BaseResponse<T>(
     code, "", data) {
