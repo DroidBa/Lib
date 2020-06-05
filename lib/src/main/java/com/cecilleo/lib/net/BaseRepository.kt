@@ -8,12 +8,10 @@ import java.io.IOException
 abstract class BaseRepository {
   suspend fun <T : Any> executeResponse(response: BaseResponse<T>
   ): BaseResult<T> {
-    return suspendCancellableCoroutine {
-      if (response.isSuccess()) {
-        BaseResult.Success(response.getResult())
-      } else {
-        BaseResult.Error(Exception(response.getError()))
-      }
+    return if (response.isSuccess()) {
+      BaseResult.Success(response.getResult())
+    } else {
+      BaseResult.Error(Exception(response.getError()))
     }
   }
 }
