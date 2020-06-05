@@ -11,7 +11,7 @@ class MVVMExampleAc : BaseVMActivity<ActivityExmapleBinding, MVVMExampleVM>() {
 
   override fun startObserve() {
     mViewModel.text.observe(this, Observer {
-      viewBinding.result.text = it.showError
+      viewBinding.result.text = "123"
     })
   }
 

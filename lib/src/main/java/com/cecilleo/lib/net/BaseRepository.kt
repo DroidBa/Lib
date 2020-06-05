@@ -11,7 +11,7 @@ abstract class BaseRepository {
     return if (response.isSuccess()) {
       BaseResult.Success(response.getResult())
     } else {
-      BaseResult.Error(Exception(response.getError()))
+      BaseResult.Error(BaseException(response.getError()))
     }
   }
 }

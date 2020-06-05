@@ -11,4 +11,8 @@ class NBAResponse<T>(var code: Int, data: T) : BaseResponse<T>(
   override fun getResult(): T {
     return data
   }
+
+  override fun getError(): String {
+    return code.toString()
+  }
 }
