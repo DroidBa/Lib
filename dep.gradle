@@ -29,7 +29,7 @@ ext {
       rxAndroid: "io.reactivex:rxandroid:$rxAndroidVersion",
       okHttp: "com.squareup.okhttp3:okhttp:$okHttpVersion",
       okHttpCookie: "com.github.franmontiel:PersistentCookieJar:v1.0.1",
-      okHttpLog: "com.squareup.okhttp3:logging-interceptor:4.0.0",
+      okHttpLog: "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
       retrofit: "com.squareup.retrofit2:retrofit:$retrofitVersion",
       retrofitGsonConverter: "com.squareup.retrofit2:converter-gson:$retrofitVersion",
       retrofitRx: "com.squareup.retrofit2:adapter-rxjava:2.1.0",

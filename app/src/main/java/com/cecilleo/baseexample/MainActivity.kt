@@ -1,7 +1,11 @@
 package com.cecilleo.baseexample
 
+import android.util.Log
+import android.view.View.OnClickListener
+import android.widget.Toast
 import com.cecilleo.baseexample.databinding.ActivityExmapleBinding
 import com.cecilleo.lib.mvp.MVPActivity
+import java.lang.reflect.Proxy
 
 class MainActivity : MVPActivity<ActivityExmapleBinding, TestView, TestPresenter>(), TestView {
 
@@ -10,9 +14,24 @@ class MainActivity : MVPActivity<ActivityExmapleBinding, TestView, TestPresenter
   }
 
   override fun initView() {
+    viewBinding.result.setOnClickListener {
+      Toast.makeText(this@MainActivity, "点击了text", Toast.LENGTH_SHORT).show()
+    }
+    HookSetOnClickListenerHelper.hook(this, viewBinding.result)
+
+    val proxyClass =
+      Proxy.newProxyInstance(this.javaClass.classLoader,
+          arrayOf<Class<*>>(
+              MyInterface::class.java)
+      ) { proxy, method, args ->
+        Log.d("Leo", ": ");
+        null//执行被代理的对象的逻辑
+      }
+    (proxyClass as MyInterface).onBack()
   }
 
   override fun initData() {
+
   }
 
   override fun showProgress() {
@@ -26,4 +45,9 @@ class MainActivity : MVPActivity<ActivityExmapleBinding, TestView, TestPresenter
 
   override fun hideProgress() {
   }
+}
+
+interface MyInterface {
+  fun onClick()
+  fun onBack()
 }
