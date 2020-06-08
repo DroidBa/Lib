@@ -7,11 +7,13 @@ import com.cecilleo.baseexample.ExampleRepository
 import com.cecilleo.lib.model.BaseViewModel
 
 class MVVMExampleVM(private val repository: ExampleRepository) : BaseViewModel() {
-  val text = MutableLiveData<BaseUiModel<ExamleRes>>()
+  val text = MutableLiveData<BaseUiModel<String>>()
 
   fun getTab() {
     launchNetTask({
       repository.getTab()
+    }, {
+      it.list?.get(0)?.name!!
     }, text)
   }
 }

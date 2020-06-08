@@ -17,20 +17,20 @@ import java.net.UnknownHostException
 import java.util.concurrent.TimeoutException
 
 open class BaseViewModel : ViewModel() {
-  open class BaseUiModel<T : Any>(
+  open class BaseUiModel<P : Any>(
     var showLoading: Boolean = false,
     var errorType: ErrorType? = null,
-    var showSuccess: T? = null,
+    var showSuccess: P? = null,
     var error: Exception? = null
   )
 
-  fun <T : Any> launchNetTask(task: suspend () -> BaseResult<T>, liveData: MutableLiveData<BaseUiModel<T>>) {
+  fun <T : Any, P : Any> launchNetTask(task: suspend () -> BaseResult<T>, processData: suspend (T) -> P, liveData: MutableLiveData<BaseUiModel<P>>) {
     viewModelScope.launch {
       try {
         liveData.value = BaseUiModel(true)
         val result = task()
         if (result is BaseResult.Success) {
-          liveData.value = BaseUiModel(showSuccess = result.data)
+          liveData.value = BaseUiModel(showSuccess = processData(result.data))
         } else if (result is BaseResult.Error) {
           throw result.exception
         }
