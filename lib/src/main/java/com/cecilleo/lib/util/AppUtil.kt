@@ -1,6 +1,5 @@
 package com.cecilleo.lib.util
 
-import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
 import android.content.res.ColorStateList
