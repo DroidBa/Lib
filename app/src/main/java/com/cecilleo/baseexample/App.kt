@@ -11,7 +11,7 @@ import org.koin.core.context.startKoin
 class App : Application() {
   override fun onCreate() {
     super.onCreate()
-    AppUtil.context = this
+    AppUtil.init(this)
     initStore()
     startKoin {
       androidContext(this@App)

@@ -16,11 +16,11 @@ import java.io.File
 
 object ExampleClient : BaseRetrofitClient() {
   private val cookieJar by lazy {
-    PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(AppUtil.context))
+    PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(AppUtil.getAppContext()))
   }
 
   override fun handleBuilder(builder: OkHttpClient.Builder) {
-    val httpCacheDirectory = File(AppUtil.context.cacheDir, "responses")
+    val httpCacheDirectory = File(AppUtil.getAppContext().cacheDir, "responses")
     val cacheSize = 10 * 1024 * 1024L // 10 MiB
     val cache = Cache(httpCacheDirectory, cacheSize)
     builder.cache(cache)
@@ -32,13 +32,13 @@ object ExampleClient : BaseRetrofitClient() {
 class ExampleInterceptor : Interceptor {
   override fun intercept(chain: Chain): Response {
     var request = chain.request()
-    if (!NetworkUtil.isNetworkAvailable(AppUtil.context)) {
+    if (!NetworkUtil.isNetworkAvailable(AppUtil.getAppContext())) {
       request = request.newBuilder()
           .cacheControl(CacheControl.FORCE_CACHE)
           .build()
     }
     val response = chain.proceed(request)
-    if (!NetworkUtil.isNetworkAvailable(AppUtil.context)) {
+    if (!NetworkUtil.isNetworkAvailable(AppUtil.getAppContext())) {
       val maxAge = 60 * 60
       response.newBuilder()
           .removeHeader("Pragma")

@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import android.util.DisplayMetrics
+import android.view.WindowManager
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.IntegerRes
@@ -14,7 +16,11 @@ import kotlin.properties.Delegates
 
 class AppUtil {
   companion object {
-    var context: Context by Delegates.notNull()
+    private var context: Context by Delegates.notNull()
+
+    fun init(ctx: Context) {
+      context = ctx
+    }
 
     fun getAppContext(): Context {
       return context
@@ -59,6 +65,13 @@ class AppUtil {
 
     fun getInteger(@IntegerRes integerRes: Int): Int {
       return getAppContext().resources.getInteger(integerRes)
+    }
+
+    fun getScreenWidth(): Int {
+      val wm = getAppContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager
+      val outMetrics = DisplayMetrics()
+      wm.defaultDisplay.getMetrics(outMetrics)
+      return outMetrics.widthPixels
     }
   }
 }

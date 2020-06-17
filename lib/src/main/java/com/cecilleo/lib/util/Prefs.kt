@@ -78,7 +78,7 @@ class Prefs {
     private lateinit var editor: Editor
     fun get(context: Context? = null, name: String? = null, mode: Int = -1): Prefs {
       if (!isInit) {
-        singleton = Builder(context ?: AppUtil.context, name, mode).build()
+        singleton = Builder(context ?: AppUtil.getAppContext(), name, mode).build()
         isInit = true
       }
       return singleton

@@ -7,6 +7,7 @@ import com.cecilleo.baseexample.databinding.ActivityExmapleBinding
 import com.cecilleo.lib.cache.Store
 import com.cecilleo.lib.mvp.MVPActivity
 import com.cecilleo.lib.util.Prefs
+import com.cecilleo.lib.util.ToastUtils
 import java.lang.reflect.Proxy
 
 class MainActivity : MVPActivity<ActivityExmapleBinding, TestView, TestPresenter>(), TestView {
@@ -17,7 +18,7 @@ class MainActivity : MVPActivity<ActivityExmapleBinding, TestView, TestPresenter
 
   override fun initView() {
     viewBinding.result.setOnClickListener {
-      Toast.makeText(this@MainActivity, "点击了text", Toast.LENGTH_SHORT).show()
+      ToastUtils.showShortToast("123123123")
     }
     HookSetOnClickListenerHelper.hook(this, viewBinding.result)
 
@@ -31,7 +32,7 @@ class MainActivity : MVPActivity<ActivityExmapleBinding, TestView, TestPresenter
         Log.d("Leo", ":读取 ${Store.get("store", String::class.java).execute()} ");
         null//执行被代理的对象的逻辑
       }
-    (proxyClass as MyInterface).onBack()
+    (proxyClass as MyInterface).onClick()
   }
 
   override fun initData() {
