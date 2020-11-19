@@ -2,29 +2,43 @@
 apply from: "dep.gradle"
 
 buildscript {
-  ext.kotlin_version = '1.4-M1'
+  ext.kotlin_version = '1.4.10'
   repositories {
+    //    maven {
+    //      url "http://maven.oa.com/nexus/content/groups/androidbuild"
+    //    }
     google()
     jcenter()
+    mavenCentral()
     maven { url 'https://www.jitpack.io' }
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url "https://dl.bintray.com/thelasterstar/maven/" }
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:4.0.0'
+    classpath 'com.android.tools.build:gradle:4.0.1'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    // NOTE: Do not place your application dependencies here; they belong
-    // in the individual module build.gradle files
   }
 }
 
 allprojects {
   repositories {
+    //    maven {
+    //      url "http://maven.oa.com/nexus/content/groups/androidbuild"
+    //    }
+    //    maven {
+    //      url "http://maven.oa.com/nexus/content/repositories/thirdparty-snapshots"
+    //    }
     google()
     jcenter()
+    mavenCentral()
     maven { url 'https://www.jitpack.io' }
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+    flatDir {
+      dirs 'libs', '../core_res/libs'
+    }
   }
 }
 

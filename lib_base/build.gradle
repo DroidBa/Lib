@@ -1,0 +1,53 @@
+apply from: '../lib.gradle'
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  api rootProject.ext.dependencies.multidex
+  api rootProject.ext.dependencies.constraintlayout
+  api rootProject.ext.dependencies.eventBus
+  api rootProject.ext.dependencies.rxJava
+  api rootProject.ext.dependencies.rxAndroid
+  api rootProject.ext.dependencies.gson
+  api rootProject.ext.dependencies.okHttp
+  api rootProject.ext.dependencies.conscrypt
+  api rootProject.ext.dependencies.okHttpLog
+  api rootProject.ext.dependencies.okHttpCookie
+  api rootProject.ext.dependencies.retrofit
+  api rootProject.ext.dependencies.retrofitGsonConverter
+  api rootProject.ext.dependencies.retrofitRx
+  api rootProject.ext.dependencies.recyclerview
+  api rootProject.ext.dependencies.coordinatorlayout
+  api rootProject.ext.dependencies.corektx
+  api rootProject.ext.dependencies.arouter
+  api rootProject.ext.dependencies.multitype
+  api rootProject.ext.dependencies.glide
+  api rootProject.ext.dependencies.preference
+
+  api rootProject.ext.xSupport.compat
+  api rootProject.ext.xSupport.design
+
+  api rootProject.ext.jetpack.extensions
+  api rootProject.ext.jetpack.viewmodelktx
+  api rootProject.ext.jetpack.room
+  api rootProject.ext.jetpack.roomKotlin
+
+  api rootProject.ext.Koin.KoinAndroid
+  api rootProject.ext.Koin.KoinLifeScope
+  api rootProject.ext.Koin.KoinViewModel
+
+  api rootProject.ext.kotlin.stdLibJdk8
+  api rootProject.ext.kotlin.coroutines
+  api rootProject.ext.kotlin.coroutineAndroid
+  api rootProject.ext.kotlin.kotlinReflect
+
+  api rootProject.ext.other.permission
+  api rootProject.ext.other.joda
+
+  testImplementation rootProject.ext.test.junit
+  androidTestImplementation rootProject.ext.test.junitext
+  androidTestImplementation rootProject.ext.test.espresso
+
+  kapt rootProject.ext.dependencies.arouterCompiler
+  kapt rootProject.ext.other.permissionKapt
+  kapt rootProject.ext.jetpack.roomKapt
+}

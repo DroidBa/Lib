@@ -34,6 +34,11 @@ android {
   //    }
   //  }
 
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
   buildTypes {
     debug {
       manifestPlaceholders = [app_name: "@string/app_name_debug"]
@@ -58,8 +63,5 @@ android {
 
 dependencies {
   implementation fileTree(include: ['*.jar'], dir: 'libs')
-  implementation project(path: ':lib')
-  implementation rootProject.ext.kotlin.stdLibJdk8
-  implementation rootProject.ext.xSupport.compat
-  implementation rootProject.ext.dependencies.constraintlayout
+  implementation project(':lib_base')
 }

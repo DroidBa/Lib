@@ -1,10 +1,9 @@
 package com.cecilleo.baseexample
 
 import android.app.Application
-import com.cecilleo.lib.cache.Storage
-import com.cecilleo.lib.cache.StoreBuilder
-import com.cecilleo.lib.util.AppUtil
-import com.google.gson.GsonBuilder
+import com.cecilleo.core.base.cache.Storage
+import com.cecilleo.core.base.cache.StoreBuilder
+import com.cecilleo.core.base.util.AppUtil
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -15,7 +14,7 @@ class App : Application() {
     initStore()
     startKoin {
       androidContext(this@App)
-      modules(appModule)
+      modules(emptyList())
     }
   }
 

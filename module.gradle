@@ -17,16 +17,42 @@ android {
     targetSdkVersion rootProject.ext.android.targetSdkVersion
     versionCode rootProject.ext.android.versionCode
     versionName rootProject.ext.android.versionName
-    javaCompileOptions {
-      annotationProcessorOptions {
-        arguments = [moduleName: project.getName()]
+  }
+
+  buildFeatures {
+    viewBinding = true
+  }
+
+  signingConfigs {
+    cgSign {
+      if (isRelease.toBoolean()) {
+        storeFile file(KEYSTORE_FILE_RELEASE)
+      } else {
+        storeFile file(KEYSTORE_FILE)
       }
+      storePassword KEYSTORE_PASSWORD
+      keyAlias KEY_ALIAS
+      keyPassword KEY_PASSWORD
+      v1SigningEnabled true
+      v2SigningEnabled true
     }
   }
 
   buildTypes {
-    release {
+    debug {
+      debuggable true
       minifyEnabled false
+      zipAlignEnabled false
+      shrinkResources false
+      signingConfig signingConfigs.cgSign
+    }
+
+    release {
+      debuggable false
+      minifyEnabled false
+      zipAlignEnabled false
+      shrinkResources false
+      signingConfig signingConfigs.cgSign
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
@@ -35,8 +61,25 @@ android {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
   }
-}
 
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+
+  sourceSets {
+    main {
+      if (isModule.toBoolean()) {
+        manifest.srcFile 'src/main/module/AndroidManifest.xml'
+      } else {
+        manifest.srcFile 'src/main/AndroidManifest.xml'
+        //release模式下排除debug文件夹中的所有Java文件
+        java {
+          exclude 'debug/**'
+        }
+      }
+    }
+  }
+}
 
 kapt {
   arguments {
@@ -46,8 +89,10 @@ kapt {
 
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
-  implementation project(':common-library')
+  implementation project(':lib_base')
+  implementation project(':lib_data')
+  implementation project(':lib_res')
   kapt rootProject.ext.dependencies.arouterCompiler
-  annotationProcessor rootProject.ext.dependencies.arouterCompiler
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  kapt rootProject.ext.other.permissionKapt
+  kapt rootProject.ext.jetpack.roomKapt
 }
