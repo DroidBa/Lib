@@ -1,0 +1,31 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cecilleo.core.wx">
+
+  <application>
+    <activity
+        android:name="com.cecilleo.core.wx.wxapi.WXEntryActivity"
+        android:exported="true"
+        android:launchMode="singleInstance"
+        android:screenOrientation="portrait"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+    <activity-alias
+        android:name="${applicationId}.wxapi.WXEntryActivity"
+        android:exported="true"
+        android:targetActivity="com.cecilleo.core.wx.wxapi.WXEntryActivity" />
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="${applicationId}.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/file_provider_paths"
+          tools:replace="android:resource" />
+    </provider>
+  </application>
+  <queries>
+    <package android:name="com.tencent.mm" />
+  </queries>
+</manifest>
