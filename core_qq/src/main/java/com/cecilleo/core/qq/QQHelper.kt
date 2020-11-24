@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import com.cecilleo.core.base.util.AppUtil
 import com.cecilleo.core.qq.QQError.CANCEL
 import com.cecilleo.core.qq.QQError.FAILED
 import com.cecilleo.core.qq.QQError.NO_INSTALL
@@ -26,7 +25,7 @@ class QQHelper(private var mContext: Context, private var qqID: String,
   private var weakContext: WeakReference<Context> = WeakReference<Context>(mContext)
 
   companion object {
-    fun create(context: Context = AppUtil.getAppContext()): QQBuilder {
+    fun create(context: Context): QQBuilder {
       return QQBuilder(context)
     }
   }
@@ -105,6 +104,9 @@ class QQHelper(private var mContext: Context, private var qqID: String,
     override fun onCancel() {
       qqShareCB?.onFailed(CANCEL)
       qqLoginCB?.onFailed(CANCEL)
+    }
+
+    override fun onWarning(p0: Int) {
     }
 
     override fun onError(e: UiError?) {

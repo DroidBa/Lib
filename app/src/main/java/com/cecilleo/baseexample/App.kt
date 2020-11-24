@@ -1,27 +1,20 @@
 package com.cecilleo.baseexample
 
 import android.app.Application
+import com.cecilleo.core.base.BaseApplication
 import com.cecilleo.core.base.cache.Storage
 import com.cecilleo.core.base.cache.StoreBuilder
 import com.cecilleo.core.base.util.AppUtil
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 
-class App : Application() {
-  override fun onCreate() {
-    super.onCreate()
+class App : BaseApplication() {
+  override fun initOtherLib() {
     AppUtil.init(this)
-    initStore()
-    startKoin {
-      androidContext(this@App)
-      modules(emptyList())
-    }
   }
 
-  private fun initStore() {
-    StoreBuilder.configure(50 * 1024L * 1024)
-        .setCacheDirectory(this, Storage.PREFER_EXTERNAL)
-        .setVersion(BuildConfig.VERSION_CODE)
-        .initialize()
+  override fun getModules(): List<Module> {
+    return emptyList()
   }
 }

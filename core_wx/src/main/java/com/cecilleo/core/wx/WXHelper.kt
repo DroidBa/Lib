@@ -1,5 +1,6 @@
 package com.cecilleo.core.wx
 
+import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import com.cecilleo.core.base.util.AppUtil
@@ -21,6 +22,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode.MAIN
+import java.io.ByteArrayOutputStream
 import java.lang.ref.WeakReference
 
 var WXID = ""
@@ -80,7 +82,7 @@ class WXHelper(private val mBuilder: WXBuilder) {
     }
   }
 
-  fun shareImgToChat(bitmap: Bitmap?) {
+  fun shareImgToChat(bitmap: Bitmap?, context: Application) {
     if (checkNoInstall()) return
     registerEvt()
     bitmap?.let {

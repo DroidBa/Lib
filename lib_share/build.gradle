@@ -1,8 +1,17 @@
 apply from: '../lib.gradle'
+//apply plugin: 'com.github.panpf.bintray-publish'
+//
+//publish {
+//  userOrg = 'cecilleo'
+//  groupId = 'com.cecilleo.lib'
+//  artifactId = 'share'
+//  publishVersion = '1.0.0'
+//  desc = '基础依赖'
+//  website = 'https://www.baidu.com'
+//}
 
 dependencies {
   implementation fileTree(dir: "libs", include: ["*.jar"])
-  implementation project(":lib_base")
   implementation project(":core_qq")
   implementation project(":core_wx")
 }

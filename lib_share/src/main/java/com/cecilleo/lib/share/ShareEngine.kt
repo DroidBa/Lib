@@ -4,14 +4,13 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.graphics.Bitmap
-import com.cecilleo.core.base.util.ToastUtils
+import android.widget.Toast
 import com.cecilleo.core.qq.QQError
 import com.cecilleo.core.qq.QQHelper
 import com.cecilleo.core.qq.QQError.NO_INSTALL
 import com.cecilleo.core.qq.QQShareCallBack
 import com.cecilleo.core.wx.WXHelper
 import com.cecilleo.core.wx.WxError
-import com.cecilleo.core.wx.WxError.FAILED
 import com.cecilleo.core.wx.WxLoginCallback
 import com.cecilleo.lib.share.ShareType.QQ_CHAT_IMG
 import com.cecilleo.lib.share.ShareType.QQ_CHAT_TEXT
@@ -39,34 +38,34 @@ class ShareEngine {
   }
 
   private fun createQQHelper(): QQHelper {
-    return QQHelper.create(context).setQQID("101888752")
+    return QQHelper.create(context).setQQID(mQID)
         .setQQShareCallback(object : QQShareCallBack {
           override fun onSuccess() {
-            ToastUtils.showLongToast("分享成功")
+            Toast.makeText(context, "分享成功", Toast.LENGTH_SHORT).show()
           }
 
           override fun onFailed(error: QQError) {
             if (error == NO_INSTALL) {
-              ToastUtils.showLongToast("未安装QQ")
+              Toast.makeText(context, "未安装QQ", Toast.LENGTH_SHORT).show()
             } else {
-              ToastUtils.showLongToast("分享失败")
+              Toast.makeText(context, "分享失败", Toast.LENGTH_SHORT).show()
             }
           }
         }).build()
   }
 
   private fun createWXHelper(): WXHelper {
-    return WXHelper.create(context).setWxAppID("wxd48a21ba496b03c9")
+    return WXHelper.create(context).setWxAppID(mWID)
         .setOnLoginWxCallback(object : WxLoginCallback {
           override fun onSuccess(code: String) {
-            ToastUtils.showShortToast("分享成功")
+            Toast.makeText(context, "分享成功", Toast.LENGTH_SHORT).show()
           }
 
           override fun onFailed(error: WxError) {
             if (error == WxError.NOINSTALL) {
-              ToastUtils.showLongToast("未安装微信")
+              Toast.makeText(context, "未安装微信", Toast.LENGTH_SHORT).show()
             } else {
-              ToastUtils.showLongToast("分享失败")
+              Toast.makeText(context, "分享失败", Toast.LENGTH_SHORT).show()
             }
           }
         }).build()
@@ -85,7 +84,7 @@ class ShareEngine {
         qqHelper.shareOnlyImgToChat(activity, imgURL)
       }
       WX_CHAT_IMG -> {
-        wxHelper.shareImgToChat(bitmap)
+        wxHelper.shareImgToChat(bitmap, context)
       }
       else -> {
 
@@ -102,6 +101,8 @@ class ShareEngine {
     private var instance: ShareEngine? = null
     private lateinit var context: Application
     private val registryMap: MutableMap<String, ShareEngine> = HashMap()
+    var mQID = ""
+    var mWID = ""
     fun getEngine(): ShareEngine {
       if (!isInit) throw Exception("请初始化分享引擎---->didn't call ShareEngine.initEngine()")
       if (null == instance) {
@@ -114,8 +115,10 @@ class ShareEngine {
       return instance!!
     }
 
-    fun initEngine(app: Application) {
+    fun initEngine(app: Application, qqID: String = "", WxID: String = "") {
       isInit = true
+      mQID = qqID
+      mWID = WxID
       context = app
     }
   }
@@ -127,7 +130,6 @@ enum class ShareType {
 
   /**必填项【activity, imgURL】*/
   QQ_CHAT_IMG,
-
   QQ_ZONE,
   WX_CHAT_IMG,
   WX_FRI

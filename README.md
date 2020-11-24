@@ -26,3 +26,7 @@ dependencies {
 #### 使用说明
 
 参照Example示例
+
+#### 更新发布
+./gradlew clean build bintrayUpload -PbintrayUser=cecilleo -PbintrayKey=xxx -PdryRun=false
+

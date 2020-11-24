@@ -89,7 +89,7 @@ kapt {
 
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
-  implementation project(':lib_base')
+  implementation rootProject.ext.cecilleo.base
   implementation project(':lib_data')
   implementation project(':lib_res')
   kapt rootProject.ext.dependencies.arouterCompiler

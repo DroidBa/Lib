@@ -2,5 +2,5 @@ apply from: '../lib.gradle'
 
 dependencies {
   implementation fileTree(dir: "libs", include: ["*.jar"])
-  implementation project(':lib_base')
+  implementation rootProject.ext.other.qqconnect
 }

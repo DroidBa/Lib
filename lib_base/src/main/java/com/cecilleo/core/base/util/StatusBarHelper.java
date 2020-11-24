@@ -295,7 +295,7 @@ public class StatusBarHelper {
 
   /**
    * API19之前透明状态栏：获取设置透明状态栏的system ui visibility的值，这是部分有提供接口的rom使用的
-   * http://stackoverflow.com/questions/21865621/transparent-status-bar-before-4-4-kitkat
+   * https://stackoverflow.csom/questions/21865621/transparent-status-bar-before-4-4-kitkat
    */
   public static Integer getStatusBarAPITransparentValue(Context context) {
     if (sTransparentValue != null) {
