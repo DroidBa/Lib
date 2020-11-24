@@ -1,4 +1,15 @@
 apply from: '../lib.gradle'
+//apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.panpf.bintray-publish'
+
+publish {
+  userOrg = 'cecilleo'
+  groupId = 'com.cecilleo.lib'
+  artifactId = 'base'
+  publishVersion = '1.0.0'
+  desc = '基础依赖'
+  website = 'https://www.baidu.com'
+}
 
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
