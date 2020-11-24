@@ -14,12 +14,14 @@ MVP MVVM 采用kotlin语言设计，引入了Jetpack框架
 allprojects {
     repositories {
 	...
-        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
     }
 }
 2.  Add the dependency
+
 dependencies {
-    implementation 'com.gitee.cecilleo:BaseLib:0.0.1'
+    //基础库依赖
+    implementation 'com.cecilleo.lib:base:1.0.0'
 }
 
 
